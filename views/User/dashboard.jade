@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        title Dashboard
+        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    body
+        .container.m-5
+            h2.text-center Dashboard
+            p Welcome to the Asset Management System
+            
+            .row
+                .col-md-4
+                    a.btn.btn-primary(href='/assets') View Assets
+                .col-md-4
+                    a.btn.btn-primary(href='/employees') View Employees
+                .col-md-4
+                    a.btn.btn-primary(href='/stock') View Stock
+                
+            .row.mt-5
+                .col-md-4
+                    a.btn.btn-success(href='/issue') Issue Asset
+                .col-md-4
+                    a.btn.btn-warning(href='/return') Return Asset
+                .col-md-4
+                    a.btn.btn-danger(href='/scrap') Scrap Asset
+                 .col-md-4
+                    a.btn.btn-danger(href='/history') Histroy Asset
+            
+          

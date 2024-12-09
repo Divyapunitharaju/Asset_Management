@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Issue
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
+    link(rel="stylesheet", href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js")
+
+  body
+    h1 Issue
+    form(action="/issue", method="POST")
+      .mb-3
+        label(for="assetId", class="form-label") Select Asset
+        select#assetId.form-control(name="assetId")
+          each asset in assets
+            option(value=asset.id) #{asset.name}
+
+      .mb-3
+        label(for="employeeId", class="form-label") Select Employee
+        select#employeeId.form-control(name="employeeId")
+          each employee in employees
+            option(value=employee.id) #{employee.name}
+
+      .mb-3
+        label(for="issueDate", class="form-label") Issue Date
+        input.form-control(type="date", id="issueDate", name="issueDate")
+
+      button.btn.btn-primary(type="submit") Submit

@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Asset Details
+    link(rel="stylesheet", href="(link unavailable)")
+    link(rel="stylesheet", href="(link unavailable)")
+    script(src="(link unavailable)")
+    script(src="(link unavailable)")
+  body
+    .container.mt-4
+      h1 Asset History
+
+    h2 Asset Details
+    p Name: #{asset.name}
+              p Serial No: #{asset.serialNo}
+              p Model: #{asset.model}
+              p Make: #{asset.make}
+              p Branch: #{asset.branch}
+              p Value: #{asset.value}
+              p Status: #{asset.status}
+
+    h2 Issue Transactions
+    table
+      tr
+        th Date
+        th Employee
+      each issueTransaction in issueTransactions
+        tr
+          td #{issueTransaction.issueDate}
+          td #{issueTransaction.employeeId}
+
+    h2 Return Transactions
+    table
+      tr
+        th Date
+        th Employee
+      each returnTransaction in returnTransactions
+        tr
+          td #{returnTransaction.returnDate}
+          td #{returnTransaction.employeeId}
+
+    h2 Scrap Transaction
+    if scrapTransaction
+      p Date: #{scrapTransaction.scrapDate}
+      p Reason: #{scrapTransaction.scrapReason}
+    else
+      p No scrap transaction found
+

@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    title Add Asset
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
+  body
+    .container
+      h3.text-center.my-5 Create New Asset
+      form.form.m-auto.w-75(action="/assets", method="POST")
+        .form-group.mb-3
+          label.mb-2(for="serialNo") Serial Number
+          input.form-control(name="serialNo", required)
+        .form-group.mb-3
+          label.mb-2(for="name") Category
+          input.form-control(name="name", required)
+        .form-group.mb-3
+          label.mb-2(for="make") Make
+          input.form-control(name="make", required)
+        .form-group.mb-3
+          label(for="model") Model
+          input.form-control(name="model", required)
+        .form-group.mb-3
+          label.mb-2(for="status") Status
+          select.form-control(name="status", required)
+            option(value="Available") Available
+            option(value="Issued") Issued
+            option(value="Obsolete") Obsolete
+        .form-group.mb-3
+          label.mb-2(for="branch") Branch
+          input.form-control(name="branch", required)
+        .form-group.mb-3
+          label.mb-2(for="value") Value
+          input.form-control(name="value", required) 
+        button.btn.btn-primary(type="submit") Add Asset
