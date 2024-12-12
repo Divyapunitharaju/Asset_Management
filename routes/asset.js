@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
         const whereClause = {};
         if (name) whereClause.name = name;
         if (model) whereClause.model = { [Op.iLike]: `%${model}%` };
-        if (make) whereClause.make = { [Op.iLike]: `%${make}%` };
+        // if (make) whereClause.make = { [Op.iLike]: `%${make}%` };
 
         const assets = await Asset.findAll({ where: whereClause });
         res.render('Asset/asset', { assets });
@@ -71,18 +71,6 @@ router.put('/:id', async (req, res) => {
 
         if (!serialNo || !name || !model || !make || !status || !branch || !value) {
             return res.status(400).json({ message: 'All fields are required' })
-        }
-
-        if (
-            asset.serialNo === serialNo &&
-            asset.name === name &&
-            asset.model === model &&
-            asset.make === make &&
-            asset.status === status &&
-            asset.branch === branch &&
-            asset.value === value
-        ){
-            return res.status(400).json({ message: "No changes made to the asset data" })
         }
 
         const assetUpdate = await asset.update({ serialNo, name, model, make, status, branch, value });

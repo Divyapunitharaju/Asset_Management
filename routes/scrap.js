@@ -16,11 +16,11 @@ route.get('/', async (req, res) => {
     const { assetId, scrapReason } = req.body;
     try {
       if (!assetId || !scrapReason) {
-        return res.status(404).json({ message: 'All fields are required' });
+        return res.status(404).json({ message: 'All fields are required' })
       }
-      const asset = await Asset.findOne({ where: { id: assetId } });
+      const asset = await Asset.findOne({ where: { id: assetId } })
       if (!asset) {
-        return res.status(404).json({ message: 'Asset not found' });
+        return res.status(404).json({ message: 'Asset not found' })
       }
       if (asset.status !== 'Available') {
         return res.status(404).json({ message: 'Asset is not available' });

@@ -78,7 +78,7 @@ route.post('/login', async (req, res) => {
         res.cookie('token', token, { httpOnly: true})
         console.log("Redirecting to dashboard")
         // res.redirect('/dashboard')
-        res.status(200).json({ message: "Login successful" });
+        res.status(200).json({ message: "Login successful" })
     } catch (error) {
         console.error("Login error:", error);
         res.status(500).json({ message: 'An error occurred while logging in' });

@@ -24,14 +24,15 @@ html
               h3.card-title Issued On
               each transaction in issueTransactions
                 p.card-text Issue Date: #{transaction.issueDate}
-
-        if returnTransactions
-          .card.mb-3
-            .card-body
-              h3.card-title Issued On
-              each return in returnTransactions
-                p.card-text Return Date: #{return.returnDate}
-                p.card-text Reason Return: #{return.reasonReturn}
+          if returnTransactions && returnTransactions.length > 0
+              .card.mb-3
+                .card-body
+                  h3.card-title Return Transactions
+                  ul.list-group
+                    each returnTransaction in returnTransactions
+                      li.list-group-item Return Date: #{returnTransaction.returnDate}, Reason: #{returnTransaction.returnReason}
+            else
+              .alert.alert-warning Return Transactions: N/A
 
         if scrapTransactions && scrapTransactions.length > 0
           .card.mb-3
@@ -39,10 +40,11 @@ html
               h3.card-title Scrap Transactions
               ul.list-group
                 each scrap in scrapTransactions
-                  li.list-group-item Scrap Date: #{scrap.scrapDate}, Reason: #{scrap.reason}
+                  li.list-group-item Scrap Date: #{scrap.scrapDate}
+                  li.list-group-item Reason: #{scrap.reason}
         else
           .alert.alert-warning Scrap Transactions: N/A
       else
         .alert.alert-danger Asset not found
 
-    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js')
+   

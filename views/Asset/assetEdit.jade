@@ -3,29 +3,50 @@ html
   head
     title Add Asset
     link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    style. 
+      #response {
+        font-size: 20px;
+      }
+      #error {
+        font-size: 20px;
+      }
+       .centered-form {
+                width: 50%;
+                margin: 0 auto;
+                margin-top: 10%;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+       
   body
     .container
-      h1 Edit Asset
-      form#addAssetForm 
-        input#assetId(type="hidden" value=asset.id)  
-        .mb-3
-          input#serialNo.form-control(type="text" name="serialNo" value=asset.serialNo )
-        .mb-3
-          input#name.form-control(type="text" name="name" value=asset.name )
-        .mb-3
-          input#model.form-control(type="text" name="model" value=asset.model)
-        .mb-3
-          input#make.form-control(type="text" name="make" value=asset.make)
-        .mb-3 
-          select#status.form-control(name="status") 
-            option(value='Available' selected=asset.value === 'Available' ) Available
-            option(value='Issued' selected=asset.value === "Issued") Issued
-            option(value='Obsolete' seelcted=asset.value === "Obsolete") Obsolete
-        .mb-3
-          input#branch.form-control(type="text" name="branch" value=asset.branch)
-        .mb-3
-          input#value.form-control(type="number" name="value" value=asset.value)
-        button#submitBtn.btn.btn-primary(type="submit") Submit
+      .centered-form 
+          h2.text-center.my-3 Edit Asset
+          form#addAssetForm 
+            input#assetId(type="hidden" value=asset.id)  
+            .mb-3
+              input#serialNo.form-control(type="text" name="serialNo" value=asset.serialNo )
+            .mb-3
+              input#name.form-control(type="text" name="name" value=asset.name )
+            .mb-3
+              input#model.form-control(type="text" name="model" value=asset.model)
+            .mb-3
+              input#make.form-control(type="text" name="make" value=asset.make)
+            .mb-3 
+              select#status.form-control(name="status") 
+                option(value='Available' selected=asset.value === 'Available' ) Available
+                option(value='Issued' selected=asset.value === "Issued") Issued
+                option(value='Obsolete' seelcted=asset.value === "Obsolete") Obsolete
+            .mb-3
+              input#branch.form-control(type="text" name="branch" value=asset.branch)
+            .mb-3
+              input#value.form-control(type="number" name="value" value=asset.value)
+            button#submitBtn.btn.btn-primary(type="submit") Submit
+            .d-flex.justify-content-center
+                div#response.mt-3.text-success
+                div#error.mt-3.text-danger
         
     script.
       const form = document.getElementById('addAssetForm');
@@ -54,13 +75,14 @@ html
           })
 
           if (response.ok) {
-            const result = await response.json();
+            const result = await response.json()
             console.log(result)
-            alert(result.message);
+            document.getElementById('response').innerText=`${result.message}`
             form.reset()
           } else {
-            const error = await response.json();
-            alert("Error: " + error.message);
+            const error = await response.json()
+            //- alert("Error: " + error.message);
+            document.getElementById('error').innerText=`${error.message}`
           }
         } catch (err) {
           console.error(err);

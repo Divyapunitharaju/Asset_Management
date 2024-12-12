@@ -3,28 +3,49 @@ html
   head
     title Add Asset
     link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    style. 
+       .centered-form {
+                width: 50%;
+                margin: 0 auto;
+                margin-top: 5%;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
   body
     .container
-      h1 Add Asset
-      form#addAssetForm   
-        .mb-3
-          input#serialNo.form-control(type="text" name="serialNo" placeholder="Enter Serial Number")
-        .mb-3
-          input#name.form-control(type="text" name="name" placeholder="Enter Name")
-        .mb-3
-          input#model.form-control(type="text" name="model" placeholder="Enter Model")
-        .mb-3
-          input#make.form-control(type="text" name="make" placeholder="Enter Make")
-        .mb-3 
-          select#status.form-control(name="status") 
-            option(value='Available') Available
-            option(value='Issued') Issued
-            option(value='Obsolete') Obsolete
-        .mb-3
-          input#branch.form-control(type="text" name="branch" placeholder="Enter Branch")
-        .mb-3
-          input#value.form-control(type="number" name="value" placeholder="Enter Value")
-        button#submitBtn.btn.btn-primary(type="submit") Submit
+      .centered-form
+          h2.text-center.my-3 Add Asset
+          form#addAssetForm   
+            .mb-3
+              label(for="serialNo") Serial Number
+              input#serialNo.form-control(type="text" name="serialNo" placeholder="Enter Serial Number")
+            .mb-3
+              label(for="serialNo") Asset Name
+              input#name.form-control(type="text" name="name" placeholder="Enter Asset Name")
+            .mb-3
+              label(for="model") Enter Model
+              input#model.form-control(type="text" name="model" placeholder="Enter Model")
+            .mb-3
+              label(for="make") Enter Make
+              input#make.form-control(type="text" name="make" placeholder="Enter Make")
+            .mb-3 
+              select#status.form-control(name="status") 
+                option(value='Available') Available
+                option(value='Issued') Issued
+                option(value='Obsolete') Obsolete
+            .mb-3
+              label(for="branch") Enter Branch
+              input#branch.form-control(type="text" name="branch" placeholder="Enter Branch")
+            .mb-3
+              label(for="value") Enter Price
+              input#value.form-control(type="number" name="value" placeholder="Enter Value")
+            button#submitBtn.btn.btn-primary(type="submit") Submit
+            .d-flex.justify-content-center
+              div#success.mt-3.text-success.fs-3
+              div#error.mt-3.text-danger.fs-3
+
         
     script.
       const form = document.getElementById('addAssetForm');
@@ -54,11 +75,11 @@ html
           if (response.ok) {
             const result = await response.json();
             console.log(result)
-            alert(result.message);
+            document.getElementById('success').innerText = ` ${result.message}`;
             form.reset()
           } else {
             const error = await response.json();
-            alert("Error: " + error.message);
+            document.getElementById('error').innerText = `${error.message}`;
           }
         } catch (err) {
           console.error(err);

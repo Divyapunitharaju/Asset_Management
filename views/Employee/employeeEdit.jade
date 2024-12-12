@@ -46,7 +46,7 @@ html
             if (response.ok) {
               const result = await response.json()
               alert("Employee updated successfully!" );
-              //- window.location.href = "/employees"; 
+              
             } else {
                const error = await response.json();
               alert("Error: " + error.message)

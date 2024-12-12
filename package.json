@@ -8,7 +8,6 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
@@ -20,5 +19,7 @@
     "nodemon": "^3.1.7",
     "pg": "^8.13.1",
     "sequelize": "^6.37.5"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
