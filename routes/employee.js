@@ -11,8 +11,8 @@ route.post('/', async (req, res) => {
             return res.status(400).json({ message: 'All fields are required' })
         }
 
-        await Employee.create({ name, position, status })
-        res.redirect('/employees')
+       const employee= await Employee.create({ name, position, status })
+       res.status(201).json({ employee, message: 'Employee is created' })
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Error while creating employee' })
@@ -38,28 +38,44 @@ route.get('/', async (req, res) => {
         console.error(err);
         res.status(500).json({ message: 'Error while fetching employees' })
     }
-});
+})
 
 route.get('/add', (req, res) => {
     res.status(200).render('Employee/employeeAdd')
 })
 
-route.get('/edit/:id', async (req, res) => {
-    const { id } = req.params
+// route.get('/edit/:id', async (req, res) => {
+//     const { id } = req.params
 
+//     try {
+//         const employee = await Employee.findOne({ where: { id } })
+
+//         if (!employee) {
+//             return res.status(404).json({message:"Employee not found"})
+//         }
+
+//         res.status(200).render('Employee/employeeEdit', { employee })
+//     } catch (err) {
+//         console.error(err)
+//         res.status(500).json({ message: 'Error while fetching employee for edit' })
+//     }
+// })
+
+route.get('/edit/:id', async (req, res) => {
+    const { id } = req.params;
+    
     try {
         const employee = await Employee.findOne({ where: { id } })
-
         if (!employee) {
-            return res.redirect('/employees')
+            return res.status(404).render('404', { message: "Employee not found" })
         }
-
         res.status(200).render('Employee/employeeEdit', { employee })
     } catch (err) {
-        console.error(err)
-        res.status(500).json({ message: 'Error while fetching employee for edit' })
+        console.error("Error fetching employee for edit", err)
+        res.status(500).json({ message: "Error while fetching employee for edit" })
     }
-})
+});
+
 
 
 route.put('/:id', async (req, res) => {
@@ -70,15 +86,19 @@ route.put('/:id', async (req, res) => {
         const employee = await Employee.findOne({ where: { id } })
 
         if (!employee) {
-            return res.redirect('/employees')
+            return res.status(404).json({message:"Employee not found"})
         }
 
         if (!name || !position || !status) {
             return res.status(400).json({ message: 'All fields are required' })
         }
 
-        await employee.update({ name, position, status })
-        res.redirect('/employees')
+        if (employee.name === name && employee.position === position && employee.status === status) {
+            return res.status(400).json({ message: "No changes made to the employee data" })
+        }
+
+        const updatedEmployee=await employee.update({ name, position, status })
+        res.status(200).json({ message: "Employee updated successfully!", updatedEmployee })
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Error while updating employee' })

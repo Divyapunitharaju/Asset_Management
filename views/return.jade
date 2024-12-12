@@ -1,38 +1,76 @@
 doctype html
 html
   head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Return Asset
-    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
-    link(rel="stylesheet", href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css")
-    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
-    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
-    script(src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js")
-
+    title Issuse Asset
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    style.
+            .centered-form {
+                width: 50%;
+                margin: 0 auto;
+                margin-top: 10%;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
   body
-    h1 Return Asset
-    form(action="/return", method="POST")
-      .mb-3
-        label(for="assetId", class="form-label") Select Asset
-        select#assetId.form-control(name="assetId")
-          option(value="" disabled selected) Select an Asset
-          each asset in assets
-            option(value=asset.id) #{asset.name}
+    .container
+        .centered-form
+          h2.my-4.text-center RETURN ASSET
+          form#returnAssetForm
+            .mb-3
+              
+                select#asset.form-control(name="assetId")
+                  option(value="" disabled selected) ---Select Asset---
+                  each asset in assets 
+                    option(value=asset.id) #{asset.name} (Serial: #{asset.serialNo})
+            .mb-3 
+              
+                select#employee.form-control(name="employeeId") 
+                  option(value="" disabled selected) ---Select Employee---
+                  each employee in employees 
+                    option(value=employee.id) #{employee.name} (ID: #{employee.id})
+            .mb-3 
+              
+              input#returnDate.form-control(type="date" name="returnDate" )
+            .mb-3
+              textarea#returnReason.form-control(type="text" name="returnReason") 
+          .d-flex.justify-content-center 
+            button#submitBtn.btn.btn-primary(type="submit") Submit
 
-      .mb-3
-        label(for="employeeId", class="form-label") Select Employee
-        select#employeeId.form-control(name="employeeId")
-          option(value="" disabled selected) Select an Employee
-          each employee in employees
-            option(value=employee.id) #{employee.name}
+    script.
+      const form = document.getElementById('returnAssetForm');
+      const submitBtn = document.getElementById('submitBtn');
 
-      .mb-3
-        label(for="returnDate", class="form-label") Return Date
-        input.form-control(type="date", id="returnDate", name="returnDate")
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const assetId = document.getElementById('asset').value
+        const employeeId = document.getElementById('employee').value
+        const returnDate = document.getElementById('returnDate').value
+        const returnReason = document.getElementById('returnReason').value
 
-      .mb-3
-        label(for="returnReason", class="form-label") Return Reason
-        input.form-control(type="text", id="returnReason", name="returnReason")
 
-      button.btn.btn-primary(type="submit") Submit
+        const issueData = { assetId, employeeId, returnDate,returnReason };
+        try {
+          const response = await fetch('http://localhost:3000/return/', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(issueData)
+          })
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+            alert(result.message);
+            form.reset()
+          } else {
+            const error = await response.json();
+            alert("Error: " + error.message);
+          }
+        } catch (err) {
+          console.error(err);
+          alert("An unexpected error occurred. Please try again.");
+        }
+      })

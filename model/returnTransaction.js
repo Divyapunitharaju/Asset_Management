@@ -1,40 +1,40 @@
-const { DataTypes } = require('sequelize')
-const Asset=require('../model/asset')
-const Employee=require('../model/employee')
-const sequelize = require('../db/db')
+const { DataTypes } = require('sequelize');
+const sequelize = require('../db/db');
+const Asset = require('../model/asset');
+const Employee = require('../model/employee');
 
 const ReturnTransaction = sequelize.define('ReturnTransaction', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
     },
     assetId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: Asset,
-            key: 'id'
-        }
+            key: 'id',
+        },
     },
     employeeId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: Employee,
-            key: 'id'
-        }
+            key: 'id',
+        },
     },
     returnDate: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
     },
     returnReason: {
         type: DataTypes.STRING,
-        allowNull: false
-    }
-})
+        allowNull: false,
+    },
+});
 
 
 
-module.exports = ReturnTransaction
+module.exports = ReturnTransaction;

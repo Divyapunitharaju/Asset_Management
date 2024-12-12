@@ -10,20 +10,21 @@ route.get('/', async (req, res) => {
             where: { status: 'Available' },
             attributes: [
                 'branch',
+                'name',
                 [sequelize.fn('COUNT', sequelize.col('id')), 'total_assets'],
                 [sequelize.fn('SUM', sequelize.col('value')), 'total_value']
             ],
-            group: ['branch']
+            group: ['branch','name']
         })
 
-        const stock = stockValue.map(item => item.dataValues);
+        const stock = stockValue.map(item => item.dataValues)
 
         const totalValue = await Asset.sum('value', {
             where: { status: 'Available' },
         })
 
-        console.log("Stock Data:", stock)
-        console.log("Total Value:", totalValue)
+        console.log(stock)
+        console.log(totalValue)
 
         res.render('stock', { stock, totalValue })
     } catch (err) {

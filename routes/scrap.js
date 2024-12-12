@@ -1,10 +1,6 @@
 const express = require('express')
 const route = express.Router()
 const Asset = require('../model/asset')
-const Employee = require('../model/employee')
-const ReturnTransaction = require('../model/returnTransaction')
-
-
 
 route.get('/', async (req, res) => {
     try {
@@ -29,11 +25,11 @@ route.get('/', async (req, res) => {
       if (asset.status !== 'Available') {
         return res.status(404).json({ message: 'Asset is not available' });
       }
-      await Asset.update({ status: 'Obsolete', scrapReason: scrapReason }, { where: { id: assetId } });
-      res.redirect('/assets');
+      await Asset.update({ status: 'Obsolete'}, { where: { id: assetId } })
+      res.status(200).json({ message: "Asset marked as scrapped successfully" })
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Error scrapping asset' });
+      console.error(err)
+      res.status(500).json({ message: 'Error scrapping asset' })
     }
   })
 

@@ -1,33 +1,32 @@
-const { DataTypes } = require('sequelize')
-const Asset=require('../model/asset')
-
-const sequelize = require('../db/db')
+const { DataTypes } = require('sequelize');
+const sequelize = require('../db/db');
+const Asset = require('../model/asset');
 
 const ScrapCategory = sequelize.define('ScrapCategory', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
-      },
-      assetId: {
+        autoIncrement: true,
+    },
+    assetId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: Asset,
-          key: 'id'
-        }
-      },
-      scrapDate: {
+            model: Asset,
+            key: 'id',
+        },
+    },
+    scrapDate: {
         type: DataTypes.DATE,
-        allowNull: false
-      },
-      scrapReason: {
+        allowNull: false,
+    },
+    scrapReason: {
         type: DataTypes.STRING,
-        allowNull: false
-      }
-
-})
-
+        allowNull: false,
+    },
+});
 
 
-module.exports=ScrapCategory
+
+
+module.exports = ScrapCategory;

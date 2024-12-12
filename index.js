@@ -2,10 +2,9 @@ const express = require('express');
 const app = express();
 const db = require('./db/db');
 const path = require('path');
-const methodOverride = require('method-override')
 const cookieParser = require('cookie-parser')
 
-
+require('./model/index')
 
 const assetCategoryRoute = require('./routes/assetCategory');
 const assetRoute = require('./routes/asset');
@@ -20,8 +19,7 @@ const userRoute=require('./routes/user')
 
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride('_method'));
+app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser())
 

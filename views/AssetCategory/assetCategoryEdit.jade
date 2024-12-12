@@ -1,14 +1,47 @@
 doctype html
 html
   head
-    title Edit Asset Category
-    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
+    title Add Asset Category
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet") 
+    //- link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
   body
-    .container.my-5
-      h3.text-center Edit Asset Category
-      form(action=`/assetCategories/${assetCategory.id}?_method=PUT`, method='POST')
-        input(type='hidden', name='_method', value='PUT')
-        .form-group
-          label.mb-2(for='name') Category Name
-          input#name.form-control(type='text', name='name', value=assetCategory.name, required placeholder='Enter Category Name')
-        button.btn.btn-primary.mt-3(type='submit') Update Category
+    .container
+      h3.text-center.my-5 Edit Asset category
+      form#addCategoryForm
+        input#assetCategoryId(type="hidden" value=assetCategory.id)
+        .mb-3
+          input#name.form-control(type="text" name="name" value=assetCategory.name)
+        button#submitBtn.btn.btn-primary(type="submit" name="submitBtn") Submit
+
+    script.
+      const form = document.getElementById('addCategoryForm');
+      const submitBtn = document.getElementById('submitBtn');
+    
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const assetCategoryId = document.getElementById('assetCategoryId').value
+        const name = document.getElementById('name').value.trim();
+        const categoryData = { name}
+        try {
+          const response = await fetch(`http://localhost:3000/assetCategories/${assetCategoryId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(categoryData)
+          })
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+            alert(result.message);
+            form.reset()
+          } else {
+            const error = await response.json();
+            alert("Error: " + error.message);
+          }
+        } catch (err) {
+          console.error(err);
+          alert("An unexpected error occurred. Please try again.");
+        }
+      })

@@ -1,50 +1,48 @@
 doctype html
 html
   head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Asset Details
-    link(rel="stylesheet", href="(link unavailable)")
-    link(rel="stylesheet", href="(link unavailable)")
-    script(src="(link unavailable)")
-    script(src="(link unavailable)")
+    title Asset History
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css')
+
   body
-    .container.mt-4
-      h1 Asset History
+    .container.mt-5
+      h1.text-center.mb-4 Asset History
 
-    h2 Asset Details
-    p Name: #{asset.name}
-              p Serial No: #{asset.serialNo}
-              p Model: #{asset.model}
-              p Make: #{asset.make}
-              p Branch: #{asset.branch}
-              p Value: #{asset.value}
-              p Status: #{asset.status}
+      if asset
+        .card.mb-3
+          .card-body
+            h2.card-title #{asset.name} (Serial: #{asset.serialNo})
+            p.card-text Make: #{asset.make}
+            p.card-text Model: #{asset.model}
+            p.card-text Branch: #{asset.branch}
+            p.card-text Status: #{asset.status}
+            p.card-text Value: $#{asset.value}
 
-    h2 Issue Transactions
-    table
-      tr
-        th Date
-        th Employee
-      each issueTransaction in issueTransactions
-        tr
-          td #{issueTransaction.issueDate}
-          td #{issueTransaction.employeeId}
+        if issueTransactions.length > 0
+          .card.mb-3
+            .card-body
+              h3.card-title Issued On
+              each transaction in issueTransactions
+                p.card-text Issue Date: #{transaction.issueDate}
 
-    h2 Return Transactions
-    table
-      tr
-        th Date
-        th Employee
-      each returnTransaction in returnTransactions
-        tr
-          td #{returnTransaction.returnDate}
-          td #{returnTransaction.employeeId}
+        if returnTransactions
+          .card.mb-3
+            .card-body
+              h3.card-title Issued On
+              each return in returnTransactions
+                p.card-text Return Date: #{return.returnDate}
+                p.card-text Reason Return: #{return.reasonReturn}
 
-    h2 Scrap Transaction
-    if scrapTransaction
-      p Date: #{scrapTransaction.scrapDate}
-      p Reason: #{scrapTransaction.scrapReason}
-    else
-      p No scrap transaction found
+        if scrapTransactions && scrapTransactions.length > 0
+          .card.mb-3
+            .card-body
+              h3.card-title Scrap Transactions
+              ul.list-group
+                each scrap in scrapTransactions
+                  li.list-group-item Scrap Date: #{scrap.scrapDate}, Reason: #{scrap.reason}
+        else
+          .alert.alert-warning Scrap Transactions: N/A
+      else
+        .alert.alert-danger Asset not found
 
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js')

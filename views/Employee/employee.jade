@@ -1,44 +1,76 @@
-doctype html 
-html 
+doctype html
+html(lang="en")
   head
-   title Employee
-   link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
-   link(rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css")
-   script(src="https://code.jquery.com/jquery-3.6.0.min.js")
-   script(src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js")
-  body 
-   .container.my-5
-    form(method="get", action="/employees")
-      .row.mb-3
-        .col-md-6
-            input#search.form-control(type="text", name="search", placeholder="Search by name")
-        .col-md-2
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css')
+    link(rel="stylesheet", href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js")
+  body
+    .container.my-5
+      form#searchForm(method="get")
+        .row.mb-3
+          .col-md-6
+            input#search.form-control(type="text" name="search" placeholder="Search by name")
+          .col-md-2
             select#status.form-control(name="status")
               option(value="active") Active
               option(value="inactive") Inactive
-        .col-md-4
+          .col-md-4
             button.btn.btn-primary(type="submit") Search
-     a.btn.btn-secondary.my-3(href='/employees/add') Add New +
-.container.my-5
-   table.table.table-striped#employee
-    thead 
-     tr 
-      
-      th Name 
-      th Position 
-      th Status
-      th Action
-    tbody 
-     each employee in employees 
-      tr 
-       
-       td= employee.name 
-       td=employee.position
-       td= employee.status
-       td
-        a.btn.btn-warning(href=`/employees/edit/${employee.id}`) Edit
-       
-   script.
+        a.btn.btn-secondary.my-3(href='/employees/add') Add New +
+
+      table.table.table-striped#employeeTable
+        thead
+          tr
+            th Name
+            th Position
+            th Status
+            th Action
+        tbody
+          each employee in employees
+            tr
+              td= employee.name
+              td= employee.position
+              td= employee.status
+              td
+                a.btn.btn-warning(href=`/employees/edit/${employee.id}`) Edit
+
+  
+    script.
+        const form=document.getElementById('searchForm')
+        const search=document.getElementById('search')
+        const status=document.getElementById('status')
+        const employeeTable=document.getElementById('employeeTable')  
+        const rows=document.querySelectorAll('tbody tr')
+
+         form.addEventListener('submit',(e)=>{
+            const searchInput=search.value.toLowercase()
+            const statusFilter=status.value.toLowercase()
+
+            for(let i=0;i<rows.length;i++)
+            {
+              rows=row[i]
+
+              const name=rows.children[0].textContent.toLowercase()
+              const status=rows.children[2].textContent.toLowercase()
+
+              const searchMatch = name.includes(searchTerm)
+              cosnt statusMatch = status === status
+              
+              if(searchMatch && statusMatch){
+                row.style.display =''
+              }
+              else{
+                row.style.display='none'
+              }
+              
+            }
+            
+          form.reset()
+
+         })
+
+    script.
       $(document).ready(function() {
-        $('#employee').DataTable();
-      });
+        $('#employeeTable').DataTable();
+      })
