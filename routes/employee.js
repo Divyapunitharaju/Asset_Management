@@ -21,15 +21,15 @@ route.post('/', async (req, res) => {
 
 
 route.get('/', async (req, res) => {
-    const { status, search } = req.query
+    const { status, name } = req.query
     const whereClause = {}
 
     try {
         if (status) {
             whereClause.status = status
         }
-        if (search) {
-            whereClause.name = { [Op.iLike]: `%${search}%` }
+        if (name) {
+            whereClause.name = { [Op.iLike]: `%${name}%` }
         }
 
         const employees = await Employee.findAll({ where: whereClause })

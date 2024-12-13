@@ -11,14 +11,13 @@ html(lang="en")
         .row.mb-3
           .col-md-6
             input#search.form-control(type="text" name="search" placeholder="Search by name")
-          .col-md-2
+          .col-md-3
             select#status.form-control(name="status")
               option(value="active") Active
               option(value="inactive") Inactive
-          .col-md-4
+          .col-md-3
             button.btn.btn-primary(type="submit") Search
         a.btn.btn-secondary.my-3(href='/employees/add') Add New +
-
       table.table.table-striped#employeeTable
         thead
           tr
@@ -27,50 +26,84 @@ html(lang="en")
             th Status
             th Action
         tbody
-          each employee in employees
+          if employees && employees.length
+            each employee in employees
+              tr
+                td= employee.name
+                td= employee.position
+                td= employee.status
+                td
+                  a.btn.btn-warning(href='/employees/edit/' + employee.id) Edit
+          else
             tr
-              td= employee.name
-              td= employee.position
-              td= employee.status
-              td
-                a.btn.btn-warning(href=`/employees/edit/${employee.id}`) Edit
-
-  
+              td(colspan="4") No employees found.
+    
     script.
-        const form=document.getElementById('searchForm')
-        const search=document.getElementById('search')
-        const status=document.getElementById('status')
-        const employeeTable=document.getElementById('employeeTable')  
-        const rows=document.querySelectorAll('tbody tr')
+      const form = document.getElementById('searchForm');
+      const search = document.getElementById('search');
+      const status = document.getElementById('status');
+      const employeeTable = document.getElementById('employeeTable');
+      const tbody = employeeTable.querySelector('tbody');
 
-         form.addEventListener('submit',(e)=>{
-            const searchInput=search.value.toLowercase()
-            const statusFilter=status.value.toLowercase()
+      
+      form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const query = new URLSearchParams({
+              search: search.value.trim(),
+              status: status.value,
+          }).toString();
 
-            for(let i=0;i<rows.length;i++)
-            {
-              rows=row[i]
-
-              const name=rows.children[0].textContent.toLowercase()
-              const status=rows.children[2].textContent.toLowercase()
-
-              const searchMatch = name.includes(searchTerm)
-              cosnt statusMatch = status === status
-              
-              if(searchMatch && statusMatch){
-                row.style.display =''
+          try {
+              const response = await fetch(`http://localhost:3000/employees/?${query}`,
+                         {
+                          method: "GET",
+                          headers: {
+                          "Content-Type": "application/json"
+                            }}
+              );
+              console.log('Response:', response)
+              if (response.ok) {
+                  const employees = await response.json();
+                  console.log('Employees:', employees);
+                  renderEmployeeTable(employees);
+              } else {
+                  const error = await response.json();
+                  console.log('Error fetching employees:', error.message);
               }
-              else{
-                row.style.display='none'
-              }
-              
-            }
-            
-          form.reset()
+          } catch (err) {
+              console.error('Error:', err.message || err);
+          }
+      });
 
-         })
+     
+      function renderEmployeeTable(employees) {
+          tbody.innerHTML = '' 
+          if (employees.length > 0) {
+              employees.forEach(employee => {
+                  const row = document.createElement('tr');
+                  row.innerHTML = `
+                      <td>${employee.name}</td>
+                      <td>${employee.position}</td>
+                      <td>${employee.status}</td>
+                      <td>
+                          <a href="/employees/edit/${employee.id}" class="btn btn-warning">Edit</a>
+                      </td>`;
+                  tbody.appendChild(row);
+              });
+          } else {
+              const noDataRow = document.createElement('tr');
+              noDataRow.innerHTML = `<td colspan="4">No employees found.</td>`;
+              tbody.appendChild(noDataRow);
+          }
 
-    script.
-      $(document).ready(function() {
-        $('#employeeTable').DataTable();
-      })
+          
+          if ($.fn.DataTable.isDataTable('#employeeTable')) {
+              $('#employeeTable').DataTable().destroy();
+          }
+          $('#employeeTable').DataTable();
+      }
+
+      
+      $(document).ready(function () {
+          $('#employeeTable').DataTable();
+      });

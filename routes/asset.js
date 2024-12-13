@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 
     } catch (err) {
         console.error(err)
-        res.json({ error: 'Error creating asset' })
+        res.status(500).json({ message: 'Error creating asset' })
     }
 })
 
@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
         res.render('Asset/asset', { assets });
     } catch (err) {
         console.error(err);
-        res.json({ error: 'Error fetching assets' });
+        res.status(500).json({ message: 'Error fetching assets' });
     }
 })
 

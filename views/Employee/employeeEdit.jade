@@ -3,23 +3,29 @@ html
   head
     title Edit Employee
     link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+   
+          
   body
     .container
-      h1 Edit Employee
-      form#addEmployeeForm
-        input#employeeId(type="hidden" value=employee.id)
-        .mb-3
-          label(for="name") Name
-          input#name.form-control(type="text" name="name" value=employee.name placeholder="Enter Employee name")
-        .mb-3
-          label(for="position") Position
-          input#position.form-control(type="text" name="position" value=employee.position placeholder="Enter Employee Position")
-        .mb-3
-          label(for="status") Status
-          select#status.form-control(name="status")
-            option(value="active", selected=employee.status === "active") Active
-            option(value="inactive", selected=employee.status === "inactive") Inactive
-        button#submitBtn.btn.btn-primary(type="submit") Submit
+    .container.d-flex.justify-content-center.mt-5
+      .centered-form.border.border-secondary.rounded.shadow.p-4.w-50.m-auto
+          h2.text-center.my-2 Edit Employee
+          form#addEmployeeForm
+            input#employeeId(type="hidden" value=employee.id)
+            .mb-3
+              label(for="name") Name
+              input#name.form-control(type="text" name="name" value=employee.name placeholder="Enter Employee name")
+            .mb-3
+              label(for="position") Position
+              input#position.form-control(type="text" name="position" value=employee.position placeholder="Enter Employee Position")
+            .mb-3
+              label(for="status") Status
+              label(for="status") Status
+              select#status.form-control(name="status")
+                  option(value="active", selected=employee.status === 'active' ? 'selected' : '') Active
+                  option(value="inactive", selected=employee.status === 'inactive' ? 'selected' : '') Inactive
+
+            button#submitBtn.btn.btn-primary(type="submit") Submit
 
     script.
       

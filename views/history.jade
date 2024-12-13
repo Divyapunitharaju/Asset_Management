@@ -30,7 +30,8 @@ html
                   h3.card-title Return Transactions
                   ul.list-group
                     each returnTransaction in returnTransactions
-                      li.list-group-item Return Date: #{returnTransaction.returnDate}, Reason: #{returnTransaction.returnReason}
+                      li.list-group-item Return Date: #{returnTransaction.returnDate}
+                      li.list-group-item Reason: #{returnTransaction.returnReason}
             else
               .alert.alert-warning Return Transactions: N/A
 

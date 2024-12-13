@@ -59,9 +59,9 @@ html
         if (name) params.append("name", name)
 
         try {
-          const response = await fetch(`/assets?${params.toString()}`, {
+          const response = await fetch(`http://localhost:3000/assets?${params.toString()}`, {
             method: "GET",
-          });
+          })
 
           if (response.ok) {
             const assets = await response.json();
@@ -97,7 +97,7 @@ html
               <td><a class="btn btn-danger" href="/assetHistory/history/${asset.id}">View History</a></td>
             </tr>
           `;
-          tbody.insertAdjacentHTML( row);
+          tbody.appendChild(row);
         })
       }
     script.
