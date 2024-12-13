@@ -12,7 +12,7 @@ route.post('/', async (req, res) => {
         }
 
        const employee= await Employee.create({ name, position, status })
-       res.status(201).json({ employee, message: 'Employee is created' })
+       res.status(200).json({ employee, message: 'Employee is created' })
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Error while creating employee' })
@@ -31,8 +31,11 @@ route.get('/', async (req, res) => {
         if (name) {
             whereClause.name = { [Op.iLike]: `%${name}%` }
         }
+        console.log(req.query)
+        console.log(whereClause)
 
         const employees = await Employee.findAll({ where: whereClause })
+      
         res.status(200).render('Employee/employee', { employees })
     } catch (err) {
         console.error(err);

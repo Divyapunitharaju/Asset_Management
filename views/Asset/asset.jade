@@ -54,18 +54,15 @@ html
         const make = document.getElementById("searchMake").value
         const name = document.getElementById("assetType").value
 
-        const params = new URLSearchParams()
-        if (make) params.append("make", make)
-        if (name) params.append("name", name)
-
         try {
-          const response = await fetch(`http://localhost:3000/assets?${params.toString()}`, {
+          const response = await fetch("http://localhost:3000/assets?", {
             method: "GET",
           })
+          console.log(response)
 
           if (response.ok) {
             const assets = await response.json();
-            updateTable(assets)
+            console.log(assets)
           } else {
             const error = await response.json();
             console.error(error)
@@ -78,29 +75,4 @@ html
       });
 
       
-      function updateTable(assets) {
-        const tbody = document.getElementById("assetBody");
-        tbody.innerHTML = ""
-        if (assets.length === 0) {
-          tbody.innerHTML = "<tr><td colspan='7'>No results found</td></tr>"
-          return;
-        }
-        assets.forEach(asset => {
-          const row = `
-            <tr>
-              <td>${asset.serialNo}</td>
-              <td>${asset.name}</td>
-              <td>${asset.make}</td>
-              <td>${asset.model}</td>
-              <td>${asset.status}</td>
-              <td><a class="btn btn-warning" href="/assets/edit/${asset.id}">Edit</a></td>
-              <td><a class="btn btn-danger" href="/assetHistory/history/${asset.id}">View History</a></td>
-            </tr>
-          `;
-          tbody.appendChild(row);
-        })
-      }
-    script.
-      $(document).ready(function() {
-        $('#asset').DataTable();
-      });
+      
