@@ -22,6 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser())
+const cors = require("cors");
+app.use(cors());
 
 
 app.set('view engine', 'jade');
@@ -31,7 +33,7 @@ db.sync({ alter: true })
     .then(() => console.log("Database connected"))
     .catch(err => console.log("Database connection error:", err))
 
-
+app.use('/user',userRoute)
 app.use('/assets', assetRoute)
 app.use('/assetCategories', assetCategoryRoute)
 app.use('/stock', stockViewRoute)
@@ -40,7 +42,7 @@ app.use('/issue', issueRoute)
 app.use('/return', returnRoute);
 app.use('/scrap',scrapRoute)
 app.use('/assetHistory',history)
-app.use('/user',userRoute)
+
 
 
 app.use((req, res) => {

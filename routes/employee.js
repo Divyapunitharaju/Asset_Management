@@ -20,13 +20,38 @@ route.post('/', async (req, res) => {
 })
 
 
+// route.get('/',(req,res)=>{
+//    const employees = Employee.findAll()
+//    res.status(200).render('Employee/employee', { employees })
+// })
+
 route.get('/', async (req, res) => {
+    try {
+        const employees = await Employee.findAll()
+        res.status(200).render('Employee/employee', { employees })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Error while fetching asset categories' })
+    }
+})
+route.get('/', async (req, res) => {
+    try {
+        const employees = await Employee.findAll()
+        res.status(200).json(employees)
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Error while fetching employees' })
+    }
+})
+
+route.get('/search', async (req, res) => {
     const { status, name } = req.query
     const whereClause = {}
 
     try {
         if (status) {
             whereClause.status = status
+            // whereClause.status = { [Op.iLike]: status }
         }
         if (name) {
             whereClause.name = { [Op.iLike]: `%${name}%` }
@@ -35,8 +60,8 @@ route.get('/', async (req, res) => {
         console.log(whereClause)
 
         const employees = await Employee.findAll({ where: whereClause })
-      
-        res.status(200).render('Employee/employee', { employees })
+        res.json(employees)
+        // res.status(200).render('Employee/employee', { employees })
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error while fetching employees' })

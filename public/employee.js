@@ -1,34 +1,28 @@
-
-  const searchForm = document.getElementById("searchForm");
-
-  searchForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const nameInput = document.getElementById("search").value.trim();
-    const status = document.getElementById("status").value.trim();
-
-    if (!nameInput || !status) {
-      alert("Please fill in both the name and status fields.");
-      return;
-    }
-
-    try {
-      const response = await fetch(`/employees?name=${nameInput}&status=${status}`, {
-        method: "GET",
-      });
-
-      if (response.ok) {
-        const employees = await response.json();
-        console.log("Employees:", employees);
-     
-      } else {
-        const error = await response.json();
-        console.error("Server Error:", error);
-        alert(`Error: ${error.message || "Unable to fetch employees."}`);
+document.addEventListener('DOMContentLoaded', async function () {
+  const searchForm = document.getElementById('searchForm');
+  searchForm.addEventListener('submit', async function (e) {
+      e.preventDefault() 
+      const search = document.getElementById('search').value
+      const status = document.getElementById('status').value 
+      try {
+          const response = await fetch(`/employees/search?name=${search}&status=${status}`)
+          const employees = await response.json()
+          let tableBody = ''
+          employees.forEach(employee => {
+              tableBody += `
+                  <tr>
+                      <td>${employee.name}</td>
+                      <td>${employee.position}</td>
+                      <td>${employee.status}</td>
+                      <td><a href="/employees/edit/${employee.id}" class="btn btn-warning">Edit</a></td>
+                  </tr>`
+          })
+          document.querySelector('tbody').innerHTML = tableBody;
+      } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred while fetching employees');
       }
-    } catch (err) {
-      console.error("Error:", err);
-      alert("An unexpected error occurred. Please try again later.");
-    }
-  });
+  })
+})
+
 

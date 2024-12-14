@@ -70,7 +70,7 @@ route.put('/:id', async (req, res) => {
         }
 
         await assetCategory.update({ name })
-        res.status(200).json({assetCategory,message:"Asset Category is created"})
+        res.status(200).json({assetCategory,message:"Asset Category is updated"})
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Error while updating asset category' })

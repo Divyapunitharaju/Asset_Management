@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
-const { Op } = require('sequelize');
+const router = express.Router()
+const { Op } = require('sequelize')
 const Asset = require('../model/asset')
 
 
@@ -22,22 +22,43 @@ router.post('/', async (req, res) => {
     }
 })
 
-
-router.get('/', async (req, res) => {
-    const { name, make, model } = req.query;
+router.get('/list', async (req, res) => {
     try {
-        const whereClause = {};
-        if (name) whereClause.name = name;
-        if (model) whereClause.model = { [Op.iLike]: `%${model}%` };
-        // if (make) whereClause.make = { [Op.iLike]: `%${make}%` };
-
-        const assets = await Asset.findAll({ where: whereClause });
-        res.render('Asset/asset', { assets });
+        const assets = await Asset.findAll()
+        res.status(200).json(assets)
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error fetching assets' });
+        console.error(err)
+        res.status(500).json({ message: 'Error while fetching assets' })
     }
 })
+
+router.get('/', async (req, res) => {
+    try {
+        const assets = await Asset.findAll()
+        res.render('Asset/asset', { assets })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Error while fetching assets' })
+    }
+})
+
+router.get('/search', async (req, res) => {
+    const { name, make, model } = req.query
+    try {
+        const whereClause = {}
+        if (name) whereClause.name = name;
+        if (model) whereClause.model = { [Op.iLike]: `%${model}%` }
+        // if (make) whereClause.make = { [Op.iLike]: `%${make}%` };
+
+        const assets = await Asset.findAll({ where: whereClause })
+        //res.render('Asset/asset', { assets })
+         res.status(200).json(assets)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error fetching assets' })
+    }
+})
+
 
 
 router.get('/add', (req, res) => {

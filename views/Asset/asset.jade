@@ -19,10 +19,10 @@ html
             .col-md-3
               select#assetType.form-control
                 option(value="" disabled selected) --Select--
-                each asset in assets 
+                each asset in assets
                   option(value=asset.name) #{asset.name}
             .col-md-3
-              button#searchButton.btn.btn-primary(type="button") Search
+              button#searchButton.btn.btn-primary(type="submit") Search
       .container.my-5
         a.btn.btn-secondary.my-3(href='/assets/add') Add New +
         table.table.table-striped#asset
@@ -48,31 +48,8 @@ html
                     a.btn.btn-warning(href=`/assets/edit/${asset.id}`) Edit
                   td
                     a.btn.btn-danger(href=`/assetHistory/history/${asset.id}`) View History
-    script.
-      const searchButton = document.getElementById("searchButton");
-      searchButton.addEventListener("click", async () => {
-        const make = document.getElementById("searchMake").value
-        const name = document.getElementById("assetType").value
 
-        try {
-          const response = await fetch("http://localhost:3000/assets?", {
-            method: "GET",
-          })
-          console.log(response)
+  
 
-          if (response.ok) {
-            const assets = await response.json();
-            console.log(assets)
-          } else {
-            const error = await response.json();
-            console.error(error)
-            alert("Error fetching assets.");
-          }
-        } catch (err) {
-          console.error("Error:", err);
-          alert("An unexpected error occurred.");
-        }
-      });
-
-      
+    script(src="/asset.js")
       

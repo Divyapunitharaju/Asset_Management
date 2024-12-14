@@ -4,67 +4,30 @@ html
     title Add Employee
     link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
     style.
-            .centered-form {
-                width: 50%;
-                margin: 0 auto;
-                margin-top: 10%;
-                padding: 20px;
-                border: 1px solid #ddd;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
+      .centered-form {
+        width: 50%;
+        margin: 0 auto;
+        margin-top: 10%;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
   body
     .container
-      .centered-form 
-          h1 Add Employee
-          form#addEmployeeForm
-            .mb-3
-              input#name.form-control(type="text" name="name" placeholder="Enter Employee name")
-            .mb-3
-              input#position.form-control(type="text" name="position" placeholder="Enter the Position")
-            .mb-3  
-              select#status.form-control(name="status")
-                option(value="active") Active
-                option(value="inactive") Inactive
-            button#submitBtn.btn.btn-primary(type="submit") Submit
-            .d-flex.justify-content-center
-                div#success.text-success.my-3
-                div#danger.text-danger.my-3
-
-
-    script.
-      const form = document.getElementById('addEmployeeForm');
-      const submitBtn = document.getElementById('submitBtn');
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value.trim();
-        const position = document.getElementById('position').value.trim();
-        const status = document.getElementById('status').value;
-
-        const employeeData = { name, position, status };
-        try {
-          const response = await fetch('http://localhost:3000/employees/', {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(employeeData)
-          })
-
-          if (response.ok) {
-            const result = await response.json();
-            console.log(result)
-            
-            document.getElementById('success').textContent = result.message
-            form.reset()
-          } else {
-            const error = await response.json();
-            document.getElementById('danger').textContent = error.message
-            
-          }
-        } catch (err) {
-          console.error(err);
-          alert("An unexpected error occurred. Please try again.");
-        }
-      })
+      .centered-form
+        h1 Add Employee
+        form#addEmployeeForm
+          .mb-3
+            input#name.form-control(type="text" name="name" placeholder="Enter Employee name")
+          .mb-3
+            input#position.form-control(type="text" name="position" placeholder="Enter the Position")
+          .mb-3
+            select#status.form-control(name="status")
+              option(value="active") Active
+              option(value="inactive") Inactive
+          button#submitBtn.btn.btn-primary(type="submit") Submit
+          .d-flex.justify-content-center
+            div#success.text-success.my-3
+            div#danger.text-danger.my-3
+    script(src="/employeeAdd.js") 

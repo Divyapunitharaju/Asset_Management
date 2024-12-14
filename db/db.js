@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 
 const db=new Sequelize(
-    'Asset1',
+    'Asset3',
     'postgres',
     'postgres',
     {
