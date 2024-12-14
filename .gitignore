@@ -1,5 +1,5 @@
 
-db.js
+db/
 .env
 node_modules/
 
