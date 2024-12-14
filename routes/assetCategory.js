@@ -61,14 +61,12 @@ route.put('/:id', async (req, res) => {
         if (!assetCategory) {
             return res.status(404).json({ message: 'Asset Category not found' })
         }
-
         if (!name) {
             return res.status(404).json({ message: 'Name is required' })
         }
         if(assetCategory.name === name){
             return res.status(404).json({ message: 'No Changes made in Asset Category' })
         }
-
         await assetCategory.update({ name })
         res.status(200).json({assetCategory,message:"Asset Category is updated"})
     } catch (err) {
