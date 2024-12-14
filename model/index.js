@@ -4,17 +4,17 @@ const IssueTransaction=require('../model/issueTransaction')
 const ScrapTransaction=require('../model/scrapTransaction')
 const ReturnTransaction=require('../model/returnTransaction')
 
-Employee.hasMany(IssueTransaction, { foreignKey: 'employeeId' });
-IssueTransaction.belongsTo(Employee, { foreignKey: 'employeeId' });
+Employee.hasMany(IssueTransaction, { foreignKey: 'employeeId' })
+IssueTransaction.belongsTo(Employee, { foreignKey: 'employeeId' })
 
-Asset.hasMany(IssueTransaction, { foreignKey: 'assetId' });
-IssueTransaction.belongsTo(Asset, { foreignKey: 'assetId' });
+Asset.hasMany(IssueTransaction, { foreignKey: 'assetId' })
+IssueTransaction.belongsTo(Asset, { foreignKey: 'assetId' })
 
-Asset.hasMany(ScrapTransaction, { foreignKey: 'assetId' });
+Asset.hasMany(ScrapTransaction, { foreignKey: 'assetId' })
 ScrapTransaction.belongsTo(Asset, { foreignKey: 'assetId' })
 
-Employee.hasMany(ReturnTransaction, { foreignKey: 'employeeId' });
-ReturnTransaction.belongsTo(Employee, { foreignKey: 'employeeId' });
+Employee.hasMany(ReturnTransaction, { foreignKey: 'employeeId' })
+ReturnTransaction.belongsTo(Employee, { foreignKey: 'employeeId'})
 
 Asset.hasMany(ReturnTransaction, { foreignKey: 'assetId' })
 ReturnTransaction.belongsTo(Asset, { foreignKey: 'assetId' })

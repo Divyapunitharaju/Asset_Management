@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   searchButton.addEventListener('click',async(e) => {
     e.preventDefault()
-
+  
     const make = document.getElementById('searchMake').value.trim()
     const name = document.getElementById('assetType').value;
     try {
@@ -28,17 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${asset.status}</td>
             <td><a class="btn btn-warning" href="/assets/edit/${asset.id}">Edit</a></td>
             <td><a class="btn btn-danger" href="/assetHistory/history/${asset.id}">View History</a></td>`;
-          assetBody.appendChild(row);
-        });
+          assetBody.appendChild(row)
+        })
       } else {
-        const noDataRow = document.createElement('tr');
+        const noDataRow = document.createElement('tr')
         noDataRow.innerHTML = `<td colspan="7" class="text-center">No assets found</td>`;
-        assetBody.appendChild(noDataRow);
+        assetBody.appendChild(noDataRow)
       }
     } catch (error) {
-      console.error(error);
-      alert('Error fetching assets');
+      console.error(error)
+      alert('Error fetching assets')
     }
   })
- 
-})
+  
+  })
+  

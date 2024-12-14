@@ -28,7 +28,7 @@ const IssueTransaction = sequelize.define('IssueTransaction', {
         type: DataTypes.DATE,
         allowNull: false,
     },
-});
+})
 
 
 module.exports = IssueTransaction;

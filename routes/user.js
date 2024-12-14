@@ -22,7 +22,6 @@ const authenticateUser = (req, res, next) => {
     }
 }
 
-
 route.get('/login', (req, res) => {
     res.status(200).render('User/login')
 });
@@ -56,7 +55,7 @@ route.post('/signup', async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({ name, email, password: hashedPassword });
-        res.status(201).json({ user, message: 'User registered successfully....You can log in now' });
+        res.status(201).json({ user, message: 'User registered successfully....You can log in now' })
     } catch (error) {
         console.error("Registration error:", error);
         res.status(500).json({ message: 'An error occurred during registration' });

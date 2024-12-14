@@ -32,7 +32,7 @@ form.addEventListener('submit', async (e) => {
       document.getElementById('error').innerText = `${error.message}`;
     }
   } catch (err) {
-    console.error(err);
-    alert("An unexpected error occurred");
+    console.error(err)
+    alert("An unexpected error occurred")
   }
 })

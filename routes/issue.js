@@ -16,8 +16,8 @@ route.get('/', async (req, res) => {
         console.error(err)
         res.status(500).json({ message: 'Error fetching data' })
     }
-
 })
+  
 // route.get('/', async (req, res) => {
 //     try {
 //       const assets = await Asset.findAll();

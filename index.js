@@ -6,8 +6,8 @@ const cookieParser = require('cookie-parser')
 
 require('./model/index')
 
-const assetCategoryRoute = require('./routes/assetCategory');
-const assetRoute = require('./routes/asset');
+const assetCategoryRoute = require('./routes/assetCategory')
+const assetRoute = require('./routes/asset')
 const stockViewRoute = require('./routes/stockView');
 const employeeRoute = require('./routes/employee');
 const issueRoute = require('./routes/issue');
@@ -22,8 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser())
-const cors = require("cors");
-app.use(cors());
+const cors = require("cors")
+app.use(cors())
 
 
 app.set('view engine', 'jade');
@@ -45,11 +45,11 @@ app.use('/assetHistory',history)
 
 
 
-app.use((req, res) => {
-    res.status(404).send('Page not found');
-})
+// app.use((req, res) => {
+//     res.status(404).send('Page not found')
+// })
 
 
 app.listen(3000, () => {
-    console.log("Server is running");
+    console.log("Server is running")
 })
