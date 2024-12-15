@@ -3,6 +3,7 @@ const app = express();
 const db = require('./db/db');
 const path = require('path');
 const cookieParser = require('cookie-parser')
+const authenticateUser=require('./middleware/authenticate')
 
 require('./model/index')
 
@@ -34,14 +35,14 @@ db.sync({ alter: true })
     .catch(err => console.log("Database connection error:", err))
 
 app.use('/user',userRoute)
-app.use('/assets', assetRoute)
-app.use('/assetCategories', assetCategoryRoute)
-app.use('/stock', stockViewRoute)
-app.use('/employees', employeeRoute)
-app.use('/issue', issueRoute)
-app.use('/return', returnRoute);
-app.use('/scrap',scrapRoute)
-app.use('/assetHistory',history)
+app.use('/assets',authenticateUser, assetRoute)
+app.use('/assetCategories',authenticateUser, assetCategoryRoute)
+app.use('/stock',authenticateUser, stockViewRoute)
+app.use('/employees',authenticateUser, employeeRoute)
+app.use('/issue',authenticateUser, issueRoute)
+app.use('/return',authenticateUser, returnRoute);
+app.use('/scrap',authenticateUser,scrapRoute)
+app.use('/assetHistory',authenticateUser,history)
 
 
 
